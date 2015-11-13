@@ -11,11 +11,20 @@ com_algs = c(
   walktrap.community,
   infomap.community)
 
+karate <- graph.famous("Zachary")
+
 com <- edge.betweenness.community(karate)
 length(com)
 com[1]
 
 length(V(karate))
+
+calculatefc <- function(graph, clusters, idCluster) {
+  v <- unlist(clusters[idCluster]) #List of members
+  n <- unlist(neighbors(graph,unlist(v))) #List of neigbours
+  ocn <- setdiff(n,v) #Extract the n-v (in the set sense)
+  return(length(ocn))
+}
 
 getValues <- function(graph){
   for(i in 1 : length(com_algs)){
@@ -30,7 +39,7 @@ getValues <- function(graph){
     
     for(c in 1:nComs){
       mc <- length(com[c])
-      fc <- 0 #todo
+      fc <- calculate_fc(graph, com, c) #nr. edges in the frontier of C
       conductance <- fc / (2*mc + fc)
       expansion <- fc/nc
       cut_ratio <- fc/(nc*(n-nc))
@@ -50,6 +59,5 @@ getValues <- function(graph){
   return(0)
 }
 
-karate <- graph.famous("Zachary")
 
 getValues(karate)
