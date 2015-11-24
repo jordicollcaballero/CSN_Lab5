@@ -1,4 +1,5 @@
 library(igraph)
+library(xtable)
 
 com_algs = c(
   edge.betweenness.community,
@@ -37,10 +38,12 @@ calculate_mcfc <- function(graph, clusters, idCluster) {
 
 getValues <- function(graph){
   dfres <- NULL
+  algCommunities <- list()
   for(i in 1 : length(com_algs)){
     n <- length(V(graph))
     com_alg <- com_algs[[i]]
     com = com_alg(graph)
+    algCommunities[[length(algCommunities)+1]] <- com
     nComs <- length(com)
     avg_conductance <- 0
     avg_cut_ratio <- 0
@@ -69,7 +72,7 @@ getValues <- function(graph){
   #plot(wc, graph)
   #plot(graph, vertex.color=membership(wc))
   #dendPlot(fc)
-  return(dfres)
+  return(list(dfres, algCommunities))
 }
 
 
@@ -87,19 +90,29 @@ g <- graph.full(10) + graph.full(10)
 g <- g + edges(sample(V(g), 10, replace=TRUE))
 g <- simplify(g)
 gValues<-getValues(g)
-xtable(gValues, digits=5)
+xtable(gValues[[1]], digits=5)
+save(dummyValues.dat, file="data/out/dummyValues.dat")
 
 
 #Zachary
 karateValues<-getValues(karate)
-xtable(karateValues, digits=5)
+xtable(karateValues[[1]], digits=5)
+save(karateValues.dat, file="data/out/karateValues.dat")
 
 #Les miserables
 lesmis <- read.graph("data/lesmis.gml", format="gml")
 lesmisValues <- getValues(lesmis)
-xtable(lesmisValues, digits=5)
+xtable(lesmisValues[[1]], digits=5)
+save(lesmisValues, file="data/out/lesmisResult.dat")
 
 #Dolphins
 dolphin <- read.graph("data/dolphins.gml", format="gml")
 dolphinValues <- getValues(dolphin)
-xtable(dolphinValues, digits=5)
+xtable(dolphinValues[[1]], digits=5)
+save(dolphinValues.dat, file="data/out/dolphinValues.dat")
+
+#Wiki
+wiki <- read.graph("data/wikipedia.gml", format="gml")
+wikiValues <- getValues(wiki)
+xtable(wikiValues[[1]], digits=5)
+save(wikiValues.dat, file="data/out/wikiValues.dat")
