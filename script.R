@@ -81,4 +81,25 @@ karate <- graph.famous("Zachary")
 
 #length(V(karate))
 
-values<-getValues(karate)
+
+#Generated Dummy
+g <- graph.full(10) + graph.full(10)
+g <- g + edges(sample(V(g), 10, replace=TRUE))
+g <- simplify(g)
+gValues<-getValues(g)
+xtable(gValues, digits=5)
+
+
+#Zachary
+karateValues<-getValues(karate)
+xtable(karateValues, digits=5)
+
+#Les miserables
+lesmis <- read.graph("data/lesmis.gml", format="gml")
+lesmisValues <- getValues(lesmis)
+xtable(lesmisValues, digits=5)
+
+#Dolphins
+dolphin <- read.graph("data/dolphins.gml", format="gml")
+dolphinValues <- getValues(dolphin)
+xtable(dolphinValues, digits=5)
