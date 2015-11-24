@@ -28,7 +28,7 @@ calculate_mcfc <- function(graph, clusters, idCluster) {
   vlist <- unlist(clusters[idCluster]) #List of members
   for(v in vlist){
     n <- unlist(neighbors(graph,unlist(v))) #List of neigbours
-    ocn <- length(setdiff(n,v))
+    ocn <- length(setdiff(n,vlist))
     f <- f + ocn #Extract the n-v (in the set sense)
     m <- m + length(n) - ocn
   }
@@ -42,7 +42,6 @@ getValues <- function(graph){
     com_alg <- com_algs[[i]]
     com = com_alg(graph)
     nComs <- length(com)
-    avg_modularity <- 0
     avg_conductance <- 0
     avg_cut_ratio <- 0
     avg_expansion <- 0
@@ -54,15 +53,15 @@ getValues <- function(graph){
       conductance <- fc / (2*mc + fc)
       expansion <- fc/nc
       cut_ratio <- fc/(nc*(n-nc))
-      avg_conductance <- avg_conductance + conductance*(mc)
-      avg_expansino <- avg_expansion + expansion*(mc)
-      avg_cut_ratio <- avg_cut_ratio + cut_ratio*(mc)
+      avg_conductance <- avg_conductance + conductance*(nc/n)
+      avg_expansion <- avg_expansion + expansion*(nc/n)
+      avg_cut_ratio <- avg_cut_ratio + cut_ratio*(nc/n)
     }
     df <- data.frame(rowname=com_algs_names[i],
                      modularity=modularity(com),
-               conductance=avg_conductance/nComs,
-               expansion=avg_expansion/nComs,
-               cut_ratio=avg_cut_ratio/nComs)
+               conductance=avg_conductance,
+               expansion=avg_expansion,
+               cut_ratio=avg_cut_ratio)
     dfres <- rbind(dfres, df)
     
     
