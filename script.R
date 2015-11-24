@@ -91,13 +91,13 @@ g <- g + edges(sample(V(g), 10, replace=TRUE))
 g <- simplify(g)
 gValues<-getValues(g)
 xtable(gValues[[1]], digits=5)
-save(dummyValues.dat, file="data/out/dummyValues.dat")
+save(dummyValues, file="data/out/dummyValues.dat")
 
 
 #Zachary
 karateValues<-getValues(karate)
 xtable(karateValues[[1]], digits=5)
-save(karateValues.dat, file="data/out/karateValues.dat")
+save(karateValues, file="data/out/karateValues.dat")
 
 #Les miserables
 lesmis <- read.graph("data/lesmis.gml", format="gml")
@@ -109,10 +109,10 @@ save(lesmisValues, file="data/out/lesmisResult.dat")
 dolphin <- read.graph("data/dolphins.gml", format="gml")
 dolphinValues <- getValues(dolphin)
 xtable(dolphinValues[[1]], digits=5)
-save(dolphinValues.dat, file="data/out/dolphinValues.dat")
+save(dolphinValues, file="data/out/dolphinValues.dat")
 
 #Wiki
 wiki <- read.graph("data/wikipedia.gml", format="gml")
 wikiValues <- getValues(wiki)
 xtable(wikiValues[[1]], digits=5)
-save(wikiValues.dat, file="data/out/wikiValues.dat")
+save(wikiValues, file="data/out/wikiValues.dat")
