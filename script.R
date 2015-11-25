@@ -122,6 +122,19 @@ wikiValues <- getValues(wiki)
 xtable(wikiValues[[1]], digits=5)
 save(wikiValues, file="data/out/wikiValues.dat")
 
-
+#Fast Greedy community alg
 wikiCom <- com_algs[[2]](as.undirected(wiki))
 save(wikiCom, file="data/out/wikiCommunities.dat")
+
+#Analysis of communities obtained
+load("data/out/wikiCommunities.dat")
+
+plot(wikiCom, wiki) #Not feasible (in a reasonable time) plot
+
+length(wikiCom)
+  
+getLabels <- function(nodes,graph) {
+  V(graph)[unlist(nodes)]$label
+}
+
+getLabels(wikiCom[100],wiki) #volcanoes
