@@ -91,7 +91,7 @@ g <- g + edges(sample(V(g), 10, replace=TRUE))
 g <- simplify(g)
 gValues<-getValues(g)
 xtable(gValues[[1]], digits=5)
-save(dummyValues, file="data/out/dummyValues.dat")
+save(gValues, file="data/out/dummyValues.dat")
 
 
 #Zachary
@@ -112,7 +112,16 @@ xtable(dolphinValues[[1]], digits=5)
 save(dolphinValues, file="data/out/dolphinValues.dat")
 
 #Wiki
+
+#com_algs = c(label.propagation.community)
+
+#com_algs_names= c("label_propagation")
+
 wiki <- read.graph("data/wikipedia.gml", format="gml")
 wikiValues <- getValues(wiki)
 xtable(wikiValues[[1]], digits=5)
 save(wikiValues, file="data/out/wikiValues.dat")
+
+
+wikiCom <- com_algs[[2]](as.undirected(wiki))
+save(wikiCom, file="data/out/wikiCommunities.dat")
